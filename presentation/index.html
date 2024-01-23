@@ -36,6 +36,7 @@
 			color: gray;
 			margin-top: -1.5em;
 		}
+
 		.small {
 			font-size: 70%;
 			vertical-align: middle;
@@ -57,8 +58,8 @@
 						<h2>Neuromorphic Intermediate Representation</h2>
 						<img src="nir_logo.png" style="width: 300px;" />
 					</div>
-					<h4>Felix Bauer <span class="small">(SynSense)</span>, 
-						Jens Pedersen <span class="small">(KTH)</span> & 
+					<h4>Felix Bauer <span class="small">(SynSense)</span>,
+						Jens Pedersen <span class="small">(KTH)</span> &
 						Bernhard Vogginger <span class="small">(SpiNNaker2)</span></h4>
 
 					<p style="display: flex; gap: 1em; color: #555; font-size: 60%; justify-content: center;">
@@ -67,8 +68,29 @@
 
 				</section>
 
+				<section style="font-size: 90%;">
+					<h2>The problem</h2>
+					<div class="fragment">
+						<q>The nervous system is based on two types of communication: those which do not involve arithmetic [...] and those which do</q>
+						<p class="credit">John von Neumann, 1958</p>
+					</div>
+					<div class="fragment">
+					<q>there is tremendous opportunity to engage in codesign all across the compute stack</q>
+					<p class="credit">Schuman et al., Nature Computational Science, 2022</p>
+					</div>
+					<div class="fragment">
+						The hardware lottery: <q>when a research idea wins because it is compatible with available software and
+							hardware and not because the idea is superior</q>
+						<p class="credit">Sara Hooker, arXiv, 2020</p>
+					</div>
+				</section>
+
+				<section>
+					<img src="telluride.jpg" />
+				</section>
+
 				<section data-background-color="white">
-					<img src="paper_authors.png" class="r-stretch"/>
+					<img src="paper_authors.png" class="r-stretch" />
 				</section>
 
 				<section data-background-color="#fff">
@@ -98,34 +120,75 @@
 					</div>
 				</section>
 
-				<section>
-					<img src="norse_logo.png" style="height: 60px; margin:0; vertical-align: bottom;" /> $\to$ SynSense Speck <img
-						src="speck.png" style="height: 60px; margin:0; vertical-align: middle;" />
-					<br />
-					<br />
-					<h4 class="fragment" data-fragment-index="0">Norse $\rightarrow$ NIR</h4>
-					<pre class="fragment" data-fragment-index="0"><code data-trim data-noescape data-line-numbers="1|3|5">import norse.torch as norse
-
-model = norse.SequentialState( ... )
-
-nir_model = norse.to_nir(model, torch.randn(1, 10))
-				</code></pre>
-					<h4 class="fragment">NIR $\rightarrow$ SynSense Sinabs</h4>
-					<pre class="fragment"><code data-trim data-noescape data-line-numbers="1|3">import sinabs.from_nir
-
-sinabs_model = sinabs.from_nir(nir_model, batch_size=4)
-				</code></pre>
-
-					<br />
-					<h4 class="fragment">NIR <b>decouples</b> hardware and algorithms</h4>
+				<section data-background-color="white">
+					<h2>The NIR graph</h2>
+					<img src="nir_graph.png" class="r-stretch" />
 				</section>
+
+				<section>
+					<h2>A NIR graph</h2>
+					<div style="display: flex; gap: 1em; align-items: center;">
+						<div class="r-stack">
+					<pre style="padding: 1em;" class="fragment fade-in-then-out">
+NIRGraph(
+  nodes = {
+    'x'     : Input,
+    'li'    : LI,
+    'thres' : Threshold,
+    'reset' : Linear,
+    'y'     : Output
+  },
+  edges = [
+    ('x'    , 'li'),
+    ('li'   , 'thres'), 
+    ('thres', 'y'),
+    ('thres', 'reset'),
+    ('reset', 'li'),
+  ]
+)
+					</pre>
+					<pre class="fragment"><code data-line-numbers="1-3|5-6" style="line-height: 1.7em;">import norse
+model = norse.SequentialState(...)
+graph = norse.to_nir(model, ...)
+...
+import sinabs
+sinabs.from_nir(nir, ...)
+					</code></pre>
+					</div>
+					<img src="nir_simple.png" style="width: 350px;"/>
+					</div>
+				</section>
+				<section data-background-color="#fff">
+					<h3>The Neuromorphic Intermediate Representation</h3>
+					<img src="nir.png" style="height: 500px;" />
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Demonstration</h2>
+				</section>
+
+				<section>
+					<h2><img src="norse_logo.png" style="height: 100px; margin:0; vertical-align: middle;" /> $\to$ NIR</h2>
+					<br />
+				</section>
+
+				<section>
+					<h2>NIR $\to$ Speck <img
+						src="speck.png" style="height: 60px; margin:0; vertical-align: middle;" /></h2>
+				</section>
+
+				<section>
+					<h2>NIR $\to$ SpiNNaker2</h2>
+				</section>
+
 				<section data-background-color="white">
 					<div style="display: flex; gap: 1em; align-items: center;">
 						<h2>Neuromorphic Intermediate Representation</h2>
 						<img src="nir_logo.png" style="width: 300px;" />
 					</div>
-					<h4>Felix Bauer <span class="small">(SynSense)</span>, 
-						Jens Pedersen <span class="small">(KTH)</span> & 
+					<h4>Felix Bauer <span class="small">(SynSense)</span>,
+						Jens Pedersen <span class="small">(KTH)</span> &
 						Bernhard Vogginger <span class="small">(SpiNNaker2)</span></h4>
 
 					<p style="display: flex; gap: 1em; color: #555; font-size: 60%; justify-content: center;">
