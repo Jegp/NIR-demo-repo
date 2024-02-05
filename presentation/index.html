@@ -42,6 +42,12 @@
 			vertical-align: middle;
 			display: inline;
 		}
+    .container{
+          display: flex;
+    }
+    .col{
+          flex: 1;
+    }
 	</style>
 </head>
 
@@ -60,7 +66,7 @@
 					</div>
 					<h4>Felix Bauer <span class="small">(SynSense)</span>,
 						Jens Pedersen <span class="small">(KTH)</span> &
-						Bernhard Vogginger <span class="small">(SpiNNaker2)</span></h4>
+						Bernhard Vogginger <span class="small">(TU Dresden)</span></h4>
 
 					<p style="display: flex; gap: 1em; color: #555; font-size: 60%; justify-content: center;">
 						<span><i class="fa fa-house"></i> github.com/neuromorphs/nir</span>
@@ -179,7 +185,44 @@ sinabs.from_nir(nir, ...)
 				</section>
 
 				<section>
-					<h2>NIR $\to$ SpiNNaker2</h2>
+					<h2>NIR $\to$ SpiNNaker2 <img src="s2logo_transparent.png" style="margin:0; vertical-align: middle;" /> </h2>
+				</section>
+
+				<section>
+          <h3>SpiNNaker2 <br>
+            <img src="Logo_TU_Dresden.svg" style="height:60px; margin:0; vertical-align: middle;" />
+            <img src="Logo_UMAN.png" style="height:60px; margin:0; vertical-align: middle;" />
+            <img src="Logo_SpiNNcloud.webp" style="height:60px; margin:0; vertical-align: middle;" />
+          </h3>
+					<img src="SpiNNaker2_Figure_v4.png" style="height: 500px;" />
+				</section>
+
+				<section>
+					<h3>SCNN in py-spinnaker2</h3>
+          <span class="small">
+					<pre class="fragment"><code data-line-numbers="1-21" style="line-height: 1.2em;", class="python">from spinnaker2 import snn
+
+# Populations
+pop_in = snn.Population(2312, neuron_model="spike_list", params=input_spikes) 
+pop_1 = snn.Population(4096, neuron_model="lif_conv2d", params=params_p1) 
+pop_2 = snn.Population(4096, neuron_model="lif_conv2d", params=params_p2) 
+pop_3 = snn.Population(512, neuron_model="lif_conv2d", params=params_p3) 
+pop_4 = snn.Population(256, neuron_model="lif_no_delay", params=params_p4) 
+pop_out = snn.Population(10, neuron_model="lif_no_delay", params=params_out) 
+
+# Projections
+proj_1 = snn.Conv2dProjection(pop_in, pop_1, weight_1, params_proj_1)
+proj_2 = snn.Conv2dProjection(pop_1, pop_2, weight_2, params_proj_2)
+proj_3 = snn.Conv2dProjection(pop_2, pop_3, weight_3, params_proj_3)
+proj_4 = snn.Projection(pop_3, pop_4, conn_list_proj_4)
+proj_5 = snn.Projection(pop_4, pop_out, conn_list_proj_5)
+
+# Network
+net = snn.Network("SCNN")
+net.add(pop_in, pop_1, pop_2, pop_3, pop_4, pop_out,
+        proj_1, proj_2, proj_3, proj_4, proj_5)
+					</code></pre>
+          </span>
 				</section>
 
 				<section data-background-color="white">
@@ -189,7 +232,7 @@ sinabs.from_nir(nir, ...)
 					</div>
 					<h4>Felix Bauer <span class="small">(SynSense)</span>,
 						Jens Pedersen <span class="small">(KTH)</span> &
-						Bernhard Vogginger <span class="small">(SpiNNaker2)</span></h4>
+						Bernhard Vogginger <span class="small">(TU Dresden)</span></h4>
 
 					<p style="display: flex; gap: 1em; color: #555; font-size: 60%; justify-content: center;">
 						<span><i class="fa fa-house"></i> github.com/neuromorphs/nir</span>
